@@ -1,16 +1,17 @@
 # coding: utf-8
 
-#require_relative 'bit'
+require_relative 'point2d'
+require_relative 'direction'
 
 class Labyrinth
 
     class ProgramError < Exception; end
 
     OPERATORS = {
-        ' '  => [:nop],
+        #' '  => ,
         '!'  => [:output_int],
         #'"'  => ,
-        #'#'  => ,
+        '#'  => [:nop],
         '$'  => [:depth],
         '%'  => [:mod],
         #'&'  => ,
@@ -113,40 +114,15 @@ class Labyrinth
     def initialize(src)
         @grid = parse(src)
         @ip = find_start
+        @dir = East.new
     end
 
     def run
-        @grid.each{|l| p l}
-        p @ip
-        while pc < @insns.size
-            insn = @insns[pc]
-
-            if insn == :debug
-                puts
-                puts @tree
-            else
-                command, bit = *@tree.process(insn)
-
-                if bit
-                    byte = @bits[bit, 8].map(&:state).join.to_i(2)
-                end
-
-                case command
-                when :write
-                    STDOUT << byte.chr
-                when :read
-                    byte = STDIN.read(1).ord
-                    8.times { |i| 
-                        @bits[bit + i].state = (byte>>(7-i))&1
-                    }
-                when :skip
-                    pc += @bits[bit].state
-                when :jump
-                    pc = [pc + jump, 0].max
-                end
-            end
-
-            pc += 1
+        loop do
+            cmd = cell @ip
+            process cmd
+            @dir = get_new_dir
+            @ip += @dir.vec
         end
     end
 
@@ -155,11 +131,11 @@ class Labyrinth
     def parse(src)
         lines = src.split($/)
 
-        width = lines.map(&:size).max
+        grid = lines.map{|l| l.chars.map{|c| OPERATORS[c]}}
 
-        lines.map!{|l| l.ljust(width, '#')}
+        width = grid.map(&:size).max
 
-        lines.map{|l| l.chars.map{|c| OPERATORS[c]}}
+        grid.each{|l| l.fill([:wall], l.length...width)}
     end
 
     def find_start
@@ -167,7 +143,7 @@ class Labyrinth
         @grid.each_with_index do |l,y|
             l.each_with_index do |c,x|
                 if c[0] != :wall
-                    start = [x,y]
+                    start = Point2D.new(x,y)
                     break
                 end
             end
@@ -177,6 +153,27 @@ class Labyrinth
         end
 
         start
+    end
+
+    def x
+        @ip.x
+    end
+
+    def y
+        @ip.y
+    end
+
+    def cell coords
+        line = @grid[coords.y] || []
+        line[coords.x] || [:wall]
+    end
+
+    def process cmd
+        p cmd
+    end
+
+    def get_new_dir
+        @dir
     end
 end
 
