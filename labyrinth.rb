@@ -68,7 +68,7 @@ class Labyrinth
         #'Y'  => ,
         #'Z'  => ,
         #'['  => ,
-        #'\\'  => ,
+        '\\'  => [:output_newline],
         #']'  => ,
         '^'  => [:rotate_north],
         '_'  => [:push_zero],
@@ -278,6 +278,8 @@ class Labyrinth
             push_main(sign*val)
         when :output_int
             $> << pop_main
+        when :output_newline
+            puts
 
         # Grid manipulation
         when :rotate_west
