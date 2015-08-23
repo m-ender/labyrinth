@@ -373,7 +373,7 @@ class Labyrinth
         when 0
             # Remain where you are by moving back one step.
             # This can only happen at the start or due to shifting.
-            @ip += @dir.reverse
+            @ip += @dir.reverse.vec
             @dir
         when 1
             # Move in the only possible direction
