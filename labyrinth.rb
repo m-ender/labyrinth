@@ -102,7 +102,7 @@ class Labyrinth
         '{'  => [:move_to_main],
         #'|'  => ,
         '}'  => [:move_to_aux],
-        #'~'  => ,
+        '~'  => [:neg],
     }
 
     OPERATORS.default = [:wall]
@@ -242,6 +242,8 @@ class Labyrinth
             a = pop_main
             b = pop_main
             push_main(b%a)
+        when :neg
+            push_main(-pop_main)
 
         # Stack manipulation
         when :dup
