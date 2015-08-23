@@ -107,11 +107,13 @@ class Labyrinth
 
     OPERATORS.default = [:wall]
 
-    def self.run(src, debug_flag)
-        new(src).run
+    def self.run(src, debug_flag=false)
+        new(src, debug_flag).run
     end
 
-    def initialize(src)
+    def initialize(src, debug_flag=false)
+        @debug = debug_flag
+
         @grid = parse(src)
         @ip = find_start
         @dir = East.new
@@ -122,12 +124,16 @@ class Labyrinth
 
     def run
         loop do
+            p @ip if @debug
             cmd = cell @ip
+            p cmd if @debug
             if cmd[0] == :terminate
                 break
             end
             process cmd
+            puts @main*' ' + ' | ' + @aux*' ' if @debug
             @dir = get_new_dir
+            p @dir if @debug
             @ip += @dir.vec
         end
     end
@@ -170,8 +176,8 @@ class Labyrinth
     end
 
     def cell coords
-        line = @grid[coords.y] || []
-        line[coords.x] || [:wall]
+        line = coords.y < 0 ? [] : @grid[coords.y] || []
+        coords.x < 0 ? [:wall] : line[coords.x] || [:wall]
     end
 
     def push_main val
@@ -251,16 +257,16 @@ class Labyrinth
             sign = 1
             byte = read_byte
             case byte
-            when '+'.ord
+            when '+'
                 sign = 1
-            when '-'.ord
+            when '-'
                 sign = -1
             else
                 @next_byte = byte
             end
 
             loop do
-                byte = read_byte.chr
+                byte = read_byte
                 if byte[/\d/]
                     val = val*10 + byte.to_i
                 else
@@ -303,6 +309,7 @@ class Labyrinth
          West.new].each do |dir|
             neighbors << dir if cell(@ip + dir.vec)[0] != :wall
         end
+
         case neighbors.size
         when 0
             # Remain where you are by moving back one step.
