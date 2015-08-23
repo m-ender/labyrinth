@@ -115,6 +115,9 @@ class Labyrinth
         @debug = debug_flag
 
         @grid = parse(src)
+        @height = @grid.size
+        @width = @height == 0 ? 0 : @grid[0].size
+
         @ip = find_start
         @dir = East.new
 
@@ -208,7 +211,12 @@ class Labyrinth
         when :push_zero
             push_main 0
         when :digit
-            push_main(pop_main*10 + param)
+            val = pop_main
+            if val < 0
+                push_main(val*10 - param)
+            else
+                push_main(val*10 + param)
+            end
         when :inc
             push_main(pop_main+1)
         when :dec
@@ -283,17 +291,57 @@ class Labyrinth
 
         # Grid manipulation
         when :rotate_west
-            @grid[y+pop_main].rotate!(1)
+            offset = pop_main
+            @grid[(y+offset) % @height].rotate!(1)
+            
+            if offset == 0
+                @ip += West.new.vec
+                if x < 0
+                    @ip.x = @width-1
+                end
+            end
+
+            @grid.each{|l| p l} if @debug
         when :rotate_east
-            @grid[y+pop_main].rotate!(-1)
+            offset = pop_main
+            @grid[(y+offset) % @height].rotate!(-1)
+            
+            if offset == 0
+                @ip += East.new.vec
+                if x >= @width
+                    @ip.x = 0
+                end
+            end
+
+            @grid.each{|l| p l} if @debug
         when :rotate_north
+            offset = pop_main
             grid = @grid.transpose
-            grid[x+pop_main].rotate!(1)
+            grid[(x+offset) % @width].rotate!(1)
             @grid = grid.transpose
+            
+            if offset == 0
+                @ip += North.new.vec
+                if y < 0
+                    @ip.y = @height-1
+                end
+            end
+
+            @grid.each{|l| p l} if @debug
         when :rotate_south
+            offset = pop_main
             grid = @grid.transpose
-            grid[x+pop_main].rotate!(-1)
+            grid[(x+offset) % @width].rotate!(-1)
             @grid = grid.transpose
+            
+            if offset == 0
+                @ip += South.new.vec
+                if y >= @height
+                    @ip.y = 0
+                end
+            end
+
+            @grid.each{|l| p l} if @debug
 
         # Others
         when :terminate
@@ -311,6 +359,8 @@ class Labyrinth
          West.new].each do |dir|
             neighbors << dir if cell(@ip + dir.vec)[0] != :wall
         end
+
+        p neighbors if @debug
 
         case neighbors.size
         when 0
