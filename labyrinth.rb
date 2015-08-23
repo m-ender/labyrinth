@@ -123,10 +123,13 @@ class Labyrinth
 
         @main = []
         @aux = []
+
+        @tick = 0
     end
 
     def run
         loop do
+            puts "\nTick #{@tick}:" if @debug
             p @ip if @debug
             cmd = cell @ip
             p cmd if @debug
@@ -138,6 +141,8 @@ class Labyrinth
             @dir = get_new_dir
             p @dir if @debug
             @ip += @dir.vec
+
+            @tick += 1
         end
     end
 
