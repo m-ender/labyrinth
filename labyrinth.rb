@@ -24,16 +24,7 @@ class Labyrinth
         '-'  => [:sub],
         '.'  => [:output_char],
         '/'  => [:div],
-        '0'  => [:digit, 0],
-        '1'  => [:digit, 1],
-        '2'  => [:digit, 2],
-        '3'  => [:digit, 3],
-        '4'  => [:digit, 4],
-        '5'  => [:digit, 5],
-        '6'  => [:digit, 6],
-        '7'  => [:digit, 7],
-        '8'  => [:digit, 8],
-        '9'  => [:digit, 9],
+        '0'  => [:digit, 0], '1'  => [:digit, 1], '2'  => [:digit, 2], '3'  => [:digit, 3], '4'  => [:digit, 4], '5'  => [:digit, 5], '6'  => [:digit, 6], '7'  => [:digit, 7], '8'  => [:digit, 8], '9'  => [:digit, 9],
         ':'  => [:dup],
         ';'  => [:pop],
         '<'  => [:rotate_west],
@@ -42,30 +33,7 @@ class Labyrinth
         '?'  => [:input_int],
         '@'  => [:terminate],
         #'A'  => ,
-        #'B'  => ,
-        #'C'  => ,
-        #'D'  => ,
-        #'E'  => ,
-        #'F'  => ,
-        #'G'  => ,
-        #'H'  => ,
-        #'I'  => ,
-        #'J'  => ,
-        #'K'  => ,
-        #'L'  => ,
-        #'M'  => ,
-        #'N'  => ,
-        #'O'  => ,
-        #'P'  => ,
-        #'Q'  => ,
-        #'R'  => ,
-        #'S'  => ,
-        #'T'  => ,
-        #'U'  => ,
-        #'V'  => ,
-        #'W'  => ,
-        #'X'  => ,
-        #'Y'  => ,
+        # ...
         #'Z'  => ,
         #'['  => ,
         '\\'  => [:output_newline],
@@ -74,30 +42,11 @@ class Labyrinth
         '_'  => [:push_zero],
         #'`'  => ,
         #'a'  => ,
-        #'b'  => ,
-        #'c'  => ,
-        #'d'  => ,
-        #'e'  => ,
-        #'f'  => ,
-        #'g'  => ,
-        #'h'  => ,
-        #'i'  => ,
-        #'j'  => ,
-        #'k'  => ,
-        #'l'  => ,
-        #'m'  => ,
-        #'n'  => ,
-        #'o'  => ,
-        #'p'  => ,
-        #'q'  => ,
-        #'r'  => ,
-        #'s'  => ,
-        #'t'  => ,
+        # ...
         #'u'  => ,
         'v'  => [:rotate_south],
         #'w'  => ,
-        #'x'  => ,
-        #'y'  => ,
+        # ...
         #'z'  => ,
         '{'  => [:move_to_main],
         #'|'  => ,
@@ -384,8 +333,13 @@ class Labyrinth
             # Otherwise, keep moving straight ahead (this can only happen
             # at the start or due to shifting).
             if neighbors.size == 2
+                val = peek_main
                 if neighbors.include? @dir
                     @dir
+                elsif val < 0
+                    @dir.left
+                elsif val > 0
+                    @dir.right
                 else
                     neighbors.sample
                 end
