@@ -11,10 +11,10 @@ class Labyrinth
         #' '  => ,
         '!'  => [:output_int],
         '"'  => [:nop],
-        #'#'  => ,
-        '$'  => [:depth],
+        '#'  => [:depth],
+        '$'  => [:bit_xor],
         '%'  => [:mod],
-        #'&'  => ,
+        '&'  => [:bit_and],
         #'\'' => ,
         '('  => [:dec],
         ')'  => [:inc],
@@ -40,7 +40,7 @@ class Labyrinth
         #']'  => ,
         '^'  => [:rotate_north],
         '_'  => [:push_zero],
-        #'`'  => ,
+        '`'  => [:bit_not],
         #'a'  => ,
         # ...
         #'u'  => ,
@@ -49,7 +49,7 @@ class Labyrinth
         # ...
         #'z'  => ,
         '{'  => [:move_to_main],
-        #'|'  => ,
+        '|'  => [:bit_or],
         '}'  => [:move_to_aux],
         '~'  => [:neg],
     }
@@ -193,6 +193,14 @@ class Labyrinth
             push_main(b%a)
         when :neg
             push_main(-pop_main)
+        when :bit_and
+            push_main(pop_main&pop_main)
+        when :bit_or
+            push_main(pop_main|pop_main)
+        when :bit_xor
+            push_main(pop_main^pop_main)
+        when :bit_not
+            push_main(~pop_main)
 
         # Stack manipulation
         when :dup
