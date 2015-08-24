@@ -384,7 +384,11 @@ class Labyrinth
             # Otherwise, keep moving straight ahead (this can only happen
             # at the start or due to shifting).
             if neighbors.size == 2
-                @dir
+                if neighbors.include? @dir
+                    @dir
+                else
+                    neighbors.sample
+                end
             else
                 neighbors[0]
             end
