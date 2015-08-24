@@ -10,8 +10,8 @@ class Labyrinth
     OPERATORS = {
         #' '  => ,
         '!'  => [:output_int],
-        #'"'  => ,
-        '#'  => [:nop],
+        '"'  => [:nop],
+        #'#'  => ,
         '$'  => [:depth],
         '%'  => [:mod],
         #'&'  => ,
