@@ -2,6 +2,10 @@
 
 Labyrinth is a two-dimensional [esoteric programming language](https://esolangs.org/wiki/Main_Page). The source code resembles a maze which is traversed by the instruction pointer. Labyrinth has two (to author's knowledge) unique features: a) there are no control flow operators - control flow is determined solely by the layout of the maze - and b) the source code can be modified at runtime via cyclic shifts of rows and columns. The latter mechanic was inspired by the German board game [*Das verrückte Labyrinth*](https://en.wikipedia.org/wiki/Labyrinth_(board_game)).
 
+Labyrinth is Turing-complete as any Brainfuck program can be translated to Labyrinth quite trivially.
+
+This repository contains the language specification (below), a reference implementation in Ruby as well as a handful of example programs.
+
 ## Overview
 
 The source code consists of single-character instructions and is interpreted as a 2D grid. The instruction pointer starts at the first known character in the file (in reading order) going right. All unknown characters are considered walls.
@@ -79,3 +83,7 @@ The four trickiest commands are `<^>v`:
 - `^` or `v` shift a column cyclically by a single cell up or down, respectively.
 - The value read from the stack is used as a relative index from the current position of the instruction pointer: if the top of the stack was 0, the row or column of the instruction pointer is shifted. If the value was -1, the previous row or column (to the left or upwards) is shifted. If the value was 2, the row or column two ahead (right or down) is shifted. This indexing is modular, so if the offset is too big for the grid it wraps around the edges.
 - If the row or column of the instruction pointer is shifted, the instruction pointer is shifted along with the row/column *before* the new direction is determined and the pointer makes its own move. The instruction pointer *can* be shifted through the edges of the grid this way.
+
+## Interpreter features
+
+The interpreter has a verbose debug mode which can be activated with the command-line flag `-d`.
