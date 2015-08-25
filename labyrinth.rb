@@ -221,7 +221,8 @@ class Labyrinth
 
         # I/O
         when :input_char
-            push_main(read_byte.ord)
+            byte = read_byte
+            push_main(byte ? byte.ord : -1)
         when :output_char
             $> << pop_main.chr
         when :input_int
