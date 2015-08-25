@@ -49,11 +49,11 @@ All arithmetic operators work with the *main* stack.
 - `*` pops two values from the stack and pushes their product.
 - `/` pops *y*, pops *x*, pushes *x/y* (integer division).
 - `%` pops *y*, pops *x*, pushes *x%y* (modulo; the sign of the result is the same as the sign of *x*).
-- `~` multiplies the top of the stack by `-1`.
+- `` ` `` multiplies the top of the stack by `-1`.
 - `&` pops two values from the stack and pushes their bitwise AND.
 - `|` pops two values from the stack and pushes their bitwise OR.
 - `$` pops two values from the stack and pushes their bitwise XOR.
-- `` ` `` pops a value from the stack and pushes its bitwise NOT.
+- `~` pops a value from the stack and pushes its bitwise NOT.
 
 ### Stack manipulation
 

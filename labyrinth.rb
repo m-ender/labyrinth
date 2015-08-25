@@ -40,7 +40,7 @@ class Labyrinth
         #']'  => ,
         '^'  => [:rotate_north],
         '_'  => [:push_zero],
-        '`'  => [:bit_not],
+        '`'  => [:neg],
         #'a'  => ,
         # ...
         #'u'  => ,
@@ -51,7 +51,7 @@ class Labyrinth
         '{'  => [:move_to_main],
         '|'  => [:bit_or],
         '}'  => [:move_to_aux],
-        '~'  => [:neg],
+        '~'  => [:bit_not],
     }
 
     OPERATORS.default = [:wall]
