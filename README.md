@@ -1,6 +1,6 @@
 # Labyrinth
 
-Labyrinth is a two-dimensional [esoteric programming language](https://esolangs.org/wiki/Main_Page). The source code resembles a maze which is traversed by the instruction pointer. Labyrinth has two (to author's knowledge) unique features: a) there are no control flow operators - control flow is determined solely by the layout of the maze - and b) the source code can be modified at runtime via cyclic shifts of rows and columns. The latter mechanic was inspired by the German board game [*Das verrückte Labyrinth*](https://en.wikipedia.org/wiki/Labyrinth_(board_game)).
+Labyrinth is a two-dimensional [esoteric programming language](https://esolangs.org/wiki/Main_Page). The source code resembles a maze which is traversed by the instruction pointer. Labyrinth has two main features setting it apart from most other languages: a) there are no control flow operators - control flow is determined solely by the layout of the maze - and b) the source code can be modified at runtime via cyclic shifts of rows and columns. The latter mechanic was inspired by the German board game [*Das verrückte Labyrinth*](https://en.wikipedia.org/wiki/Labyrinth_(board_game)).
 
 Labyrinth is Turing-complete as any Brainfuck program can be translated to Labyrinth quite trivially.
 
