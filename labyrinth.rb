@@ -86,7 +86,7 @@ class Labyrinth
                 break
             end
             process cmd
-            puts @main*' ' + ' | ' + @aux*' ' if @debug
+            puts @main*' ' + ' | ' + @aux.reverse*' ' if @debug
             @dir = get_new_dir
             p @dir if @debug
             @ip += @dir.vec
