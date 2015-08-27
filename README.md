@@ -24,7 +24,7 @@ The instruction pointer will generally follow "corridors" of instructions. Junct
 
   *Important special case:* If the instruction pointer is facing a wall and has a wall at its back (i.e. the neighbours are to the left and right)... if the top of the *main* stack is negative/positive, go left/right (as you would with 3 or 4 neighbours). However, if the top of the stack is 0, choose one of the two directions at random. This is the only built-in random number generator. Note also that this setup can only be reached via very specific source code manipulation (see commands below). See [this example program](https://github.com/mbuettner/labyrinth/blob/master/examples/rng.lab) for how to make use of this in actual code.
   
-- **1 neighbour:** Go towards the only available direction. Usually, this means you have hit a deadend and turn around on the spot (executing the command you turn around on only once).
+- **1 neighbour:** Go towards the only available direction. Usually, this means you have hit a dead end and turn around on the spot (executing the command you turn around on only once).
 - **0 neighbours:** Remain where you are without changing your direction. This can occur at the very start of the program or due to source code manipulation.
 
 ## Commands

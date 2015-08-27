@@ -1,0 +1,45 @@
+1
+0
+1
+:
+}
+_
+1
+0
+0
+:
+}
+_
+9
+9
+:
+}
+_
+9
+8
+:
+}
+_
+9
+7
+:
+}
+_
+""}"";"{"("
+ "" `  _ {.
+   \(  ( @
+   .5  "
+    9  "
+125.\  }:_10
+\      {   %
+.85~{;"/01_}
+   ~  "
+   !\_(
+
+This is the base code for a quine. That is, it correctly prints out the data itself,
+but the data has been replaced with "abcde" instead of the actual code. To generate
+the data for the actual quine, reverse the code starting in line 28, convert each
+character to its character code, and list all of them, separated by :}_, one
+character per line before line 28. You can use the following CJam script for that:
+
+    qW%{is":}_"+N*N}/
