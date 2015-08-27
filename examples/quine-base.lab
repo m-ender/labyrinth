@@ -1,35 +1,38 @@
-1
+<_101_001_99_89_79""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+6
 0
-1
+.
 _
-1
-0
-0
-_
-9
-9
-_
-9
-8
-_
-9
-7
-_
-`"
-`}";{();@
-  1 : _.
-  " _
-  " (}
-5.\  ":_10
-9    "   :
-_~{;"/"=%}
- ~  "
- !\_(
+"("""/01_!
+;    {   %
+"    }:_10
+"_95.:
+"(
+{.
+@
 
-This is the base code for a quine. That is, it correctly prints out the data itself,
-but the data has been replaced with "abcde" instead of the actual code. To generate
-the data for the actual quine, reverse the code starting in line 18, convert each
-character to its character code, and list all of them, separated by "_", one
-character per line before line 18. You can use the following CJam script for that:
+This is the base code for a quine using grid rotation. That is, it correctly prints
+out the data itself, but the data has been replaced with "abcde" instead of the 
+actual code. To generate the data for the actual quine, take the code starting with 
+newline at the end of the first line, reverse that, convert each character to its 
+character code, reverse that and list all of them, separated by "_", after the 
+initial "<" (and remove the NOPs in the first line).
+You can use the following CJam script for that:
 
-    qW%{is'_+N*N}/
+    Sq_W%{is'_+}%\
+
+Alternative base:
+
+6
+0
+.
+_
+);"""{@
+" _ ).
+" 95
+"  .
+" }:
+" "
+" ":_10
+" "   %
+""/01_!
