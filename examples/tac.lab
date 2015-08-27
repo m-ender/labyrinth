@@ -1,3 +1,16 @@
+}, "{@
+"""".
+""
+
+Alternatives:
 },
 "";"{@
 "" 1.
+
+}, 1.    This one has a slightly funny path during printing and will move
+"";"{@   twice through the ';' after each printed character.
+""
+
+},
+"""".
+"" "{@

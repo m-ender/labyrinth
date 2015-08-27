@@ -47,8 +47,8 @@ All arithmetic operators work with the *main* stack.
 - `+` pops two values from the stack and pushes their sum.
 - `-` pops *y*, pops *x*, pushes *x-y*.
 - `*` pops two values from the stack and pushes their product.
-- `/` pops *y*, pops *x*, pushes *x/y* (integer division).
-- `%` pops *y*, pops *x*, pushes *x%y* (modulo; the sign of the result is the same as the sign of *x*).
+- `/` pops *y*, pops *x*, pushes *x/y* (integer division, rounded towards negative infinity).
+- `%` pops *y*, pops *x*, pushes *x%y* (modulo; the sign of the result is the same as the sign of *y*).
 - `` ` `` multiplies the top of the stack by `-1`.
 - `&` pops two values from the stack and pushes their bitwise AND.
 - `|` pops two values from the stack and pushes their bitwise OR.
@@ -83,6 +83,10 @@ The four trickiest commands are `<^>v`:
 - `^` or `v` shift a column cyclically by a single cell up or down, respectively.
 - The value read from the stack is used as a relative index from the current position of the instruction pointer: if the top of the stack was 0, the row or column of the instruction pointer is shifted. If the value was -1, the previous row or column (to the left or upwards) is shifted. If the value was 2, the row or column two ahead (right or down) is shifted. This indexing is modular, so if the offset is too big for the grid it wraps around the edges.
 - If the row or column of the instruction pointer is shifted, the instruction pointer is shifted along with the row/column *before* the new direction is determined and the pointer makes its own move. The instruction pointer *can* be shifted through the edges of the grid this way.
+
+## Comments
+
+Labyrinth doesn't have an dedicated comment syntax. However, spaces and all letters except lower-case `v` are considered walls, so you can use them freely around your code to add comments. Furthermore, you can use arbitrary characters (even recognised ones) as long as they are not reachable, e.g. by separating them from the actual program by a layer of walls. However, in this case be careful if you use the grid manipulation commands as they might bring your comments in contact with your actual program.
 
 ## Interpreter features
 
