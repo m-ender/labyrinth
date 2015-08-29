@@ -34,6 +34,7 @@ With the exception of `v` Labyrinth uses only non-letter commands. Spaces are re
 ### General
 
 - `"` is no-op, but is not considered a wall. It is very useful in padding some paths of your maze layout.
+- `'` is also a no-op, but can be turned into a debug command with the interpreter flag `-d`. If the flag is set, this command will print the current position, direction and the stacks to STDOUT.
 - `@` is an exit of the maze: the program terminates when this command is executed.
 
 ### Arithmetic
@@ -86,8 +87,8 @@ The four trickiest commands are `<^>v`:
 
 ## Comments
 
-Labyrinth doesn't have an dedicated comment syntax. However, spaces and all letters except lower-case `v` are considered walls, so you can use them freely around your code to add comments. Furthermore, you can use arbitrary characters (even recognised ones) as long as they are not reachable, e.g. by separating them from the actual program by a layer of walls. However, in this case be careful if you use the grid manipulation commands as they might bring your comments in contact with your actual program.
+Labyrinth doesn't have a dedicated comment syntax. However, spaces and all letters except lower-case `v` are considered walls, so you can use them freely around your code to add comments. Furthermore, you can use arbitrary characters (even recognised ones) as long as they are not reachable, e.g. by separating them from the actual program by a layer of walls. However, in this case be careful if you use the grid manipulation commands as they might bring your comments in contact with your actual program.
 
 ## Interpreter features
 
-The interpreter has a verbose debug mode which can be activated with the command-line flag `-d`.
+The interpreter has a verbose debug mode (like an additional debug level beyond activating `'` commands) which can be switched on with the command-line flag `-D`. If this flag is set, the interpreter will print detailed diagnostic information after every tick of the program.

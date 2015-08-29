@@ -15,7 +15,7 @@ class Labyrinth
         '$'  => [:bit_xor],
         '%'  => [:mod],
         '&'  => [:bit_and],
-        #'\'' => ,
+        '\'' => [:debug],
         '('  => [:dec],
         ')'  => [:inc],
         '*'  => [:mul],
@@ -56,12 +56,12 @@ class Labyrinth
 
     OPERATORS.default = [:wall]
 
-    def self.run(src, debug_flag=false)
-        new(src, debug_flag).run
+    def self.run(src, debug_level=0)
+        new(src, debug_level).run
     end
 
-    def initialize(src, debug_flag=false)
-        @debug = debug_flag
+    def initialize(src, debug_level=false)
+        @debug_level = debug_level
 
         @grid = parse(src)
         @height = @grid.size
@@ -78,17 +78,17 @@ class Labyrinth
 
     def run
         loop do
-            puts "\nTick #{@tick}:" if @debug
-            p @ip if @debug
+            puts "\nTick #{@tick}:" if @debug_level > 1
+            p @ip if @debug_level > 1
             cmd = cell @ip
-            p cmd if @debug
+            p cmd if @debug_level > 1
             if cmd[0] == :terminate
                 break
             end
             process cmd
-            puts @main*' ' + ' | ' + @aux.reverse*' ' if @debug
+            puts @main*' ' + ' | ' + @aux.reverse*' ' if @debug_level > 1
             @dir = get_new_dir
-            p @dir if @debug
+            p @dir if @debug_level > 1
             @ip += @dir.vec
 
             @tick += 1
@@ -266,7 +266,7 @@ class Labyrinth
                 end
             end
 
-            @grid.each{|l| p l} if @debug
+            @grid.each{|l| p l} if @debug_level > 1
         when :rotate_east
             offset = pop_main
             @grid[(y+offset) % @height].rotate!(-1)
@@ -278,7 +278,7 @@ class Labyrinth
                 end
             end
 
-            @grid.each{|l| p l} if @debug
+            @grid.each{|l| p l} if @debug_level > 1
         when :rotate_north
             offset = pop_main
             grid = @grid.transpose
@@ -292,7 +292,7 @@ class Labyrinth
                 end
             end
 
-            @grid.each{|l| p l} if @debug
+            @grid.each{|l| p l} if @debug_level > 1
         when :rotate_south
             offset = pop_main
             grid = @grid.transpose
@@ -306,13 +306,20 @@ class Labyrinth
                 end
             end
 
-            @grid.each{|l| p l} if @debug
+            @grid.each{|l| p l} if @debug_level > 1
 
         # Others
         when :terminate
             raise '[BUG] Received :terminate. This shouldn\'t happen.'
         when :nop
             # Nop(e)
+        when :debug
+            if @debug_level > 0
+                puts
+                puts "Position: #{@ip.pretty}"
+                puts "Direction: #{@dir.class.name}"
+                puts "Main [ #{@main*' '}  |  #{@aux.reverse*' '} ] Auxiliary"
+            end
         end
     end
 
@@ -325,7 +332,7 @@ class Labyrinth
             neighbors << dir if cell(@ip + dir.vec)[0] != :wall
         end
 
-        p neighbors if @debug
+        p neighbors if @debug_level > 1
 
         case neighbors.size
         when 0
@@ -392,9 +399,17 @@ class Labyrinth
     end
 end
 
-debug_flag = ARGV[0] == "-d"
-if debug_flag
+case ARGV[0]
+when "-d"
+    debug_level = 1
+when "-D"
+    debug_level = 2
+else
+    debug_level = 0
+end
+
+if debug_level > 0
     ARGV.shift
 end
 
-Labyrinth.run(ARGF.read, debug_flag)
+Labyrinth.run(ARGF.read, debug_level)
