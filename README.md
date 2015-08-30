@@ -72,7 +72,7 @@ These also operate on the *main* stack.
 - `,` read a single character from STDIN and push its byte value. Pushes `-1` once EOF is reached.
 - `?` read as many characters as possible to form a valid (signed) decimal integer and push its value. Pushes `0` once EOF is reached.
 - `.` pop a value and write the corresponding character to STDOUT.
-- `!` pop a vlaue and write its decimal representation to STDOUT.
+- `!` pop a value and write its decimal representation to STDOUT.
 - `\` print a newline/line feed character (0x0A).
 
 ### Grid manipulation
