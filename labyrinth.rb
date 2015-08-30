@@ -8,7 +8,7 @@ class Labyrinth
     class ProgramError < Exception; end
 
     OPERATORS = {
-        #' '  => ,
+        ' '  => [:wall],
         '!'  => [:output_int],
         '"'  => [:nop],
         '#'  => [:depth],
@@ -319,6 +319,8 @@ class Labyrinth
         when :debug
             if @debug_level > 0
                 puts
+                puts "Grid:"
+                puts @grid.map{|l| l.map{|c| OPERATORS.invert[c]}*''}
                 puts "Position: #{@ip.pretty}"
                 puts "Direction: #{@dir.class.name}"
                 puts "Main [ #{@main*' '}  |  #{@aux.reverse*' '} ] Auxiliary"
