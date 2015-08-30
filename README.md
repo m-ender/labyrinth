@@ -29,7 +29,7 @@ The instruction pointer will generally follow "corridors" of instructions. Junct
 
 ## Commands
 
-With the exception of `v` Labyrinth uses only non-letter commands. Spaces are reserved as walls and `'`, `[` and `]` have no function yet but may be added later (that is, they are currently also treated as walls).
+With the exception of `v` Labyrinth uses only non-letter commands. Spaces are reserved as walls and `[` and `]` have no function yet but may be added later (that is, they are currently also treated as walls).
 
 ### General
 
