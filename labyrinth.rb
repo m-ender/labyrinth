@@ -77,6 +77,9 @@ class Labyrinth
     end
 
     def run
+        if !@ip
+            return
+        end
         loop do
             puts "\nTick #{@tick}:" if @debug_level > 1
             p @ip if @debug_level > 1
@@ -108,7 +111,7 @@ class Labyrinth
     end
 
     def find_start
-        start = []
+        start = nil
         @grid.each_with_index do |l,y|
             l.each_with_index do |c,x|
                 if c[0] != :wall
@@ -116,7 +119,7 @@ class Labyrinth
                     break
                 end
             end
-            if start != []
+            if start
                 break
             end
         end
