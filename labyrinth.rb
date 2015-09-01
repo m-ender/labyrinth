@@ -243,7 +243,7 @@ class Labyrinth
 
             loop do
                 byte = read_byte
-                if byte[/\d/]
+                if byte && byte[/\d/]
                     val = val*10 + byte.to_i
                 else
                     @next_byte = byte
@@ -269,7 +269,7 @@ class Labyrinth
                 end
             end
 
-            @grid.each{|l| p l} if @debug_level > 1
+            puts @grid.map{|l| l.map{|c| OPERATORS.invert[c]}*''} if @debug_level > 1
         when :rotate_east
             offset = pop_main
             @grid[(y+offset) % @height].rotate!(-1)
@@ -281,7 +281,7 @@ class Labyrinth
                 end
             end
 
-            @grid.each{|l| p l} if @debug_level > 1
+            puts @grid.map{|l| l.map{|c| OPERATORS.invert[c]}*''} if @debug_level > 1
         when :rotate_north
             offset = pop_main
             grid = @grid.transpose
@@ -295,7 +295,7 @@ class Labyrinth
                 end
             end
 
-            @grid.each{|l| p l} if @debug_level > 1
+            puts @grid.map{|l| l.map{|c| OPERATORS.invert[c]}*''} if @debug_level > 1
         when :rotate_south
             offset = pop_main
             grid = @grid.transpose
@@ -309,7 +309,7 @@ class Labyrinth
                 end
             end
 
-            @grid.each{|l| p l} if @debug_level > 1
+            puts @grid.map{|l| l.map{|c| OPERATORS.invert[c]}*''} if @debug_level > 1
 
         # Others
         when :terminate
