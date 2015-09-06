@@ -10,7 +10,7 @@ This repository contains the language specification (below), a reference impleme
 
 The source code consists of single-character instructions and is interpreted as a 2D grid. The instruction pointer starts at the first known character in the file (in reading order) going right. All unknown characters are considered walls.
 
-As for data structures, Labyrinth has two stacks, called *main* and *auxiliary*. They both start empty but the bottoms of the stacks are treated as an infinite number of zeroes (so if you try to pop from operate on an empty stack you will get zeroes).
+As for data structures, Labyrinth has two stacks, called *main* and *auxiliary*. They both start empty but the bottoms of the stacks are treated as an infinite number of zeroes (so if you try to pop from or operate on an empty stack you will get zeroes).
 
 ## Control Flow
 
@@ -33,7 +33,7 @@ With the exception of `v` Labyrinth uses only non-letter commands. Spaces are re
 
 ### General
 
-- `"` is no-op, but is not considered a wall. It is very useful in padding some paths of your maze layout.
+- `"` is a no-op, but is not considered a wall. It is very useful in padding some paths of your maze layout.
 - `'` is also a no-op, but can be turned into a debug command with the interpreter flag `-d`. If the flag is set, this command will print the current position, direction and the stacks to STDOUT.
 - `@` is an exit of the maze: the program terminates when this command is executed.
 
@@ -70,7 +70,7 @@ All arithmetic operators work with the *main* stack.
 These also operate on the *main* stack.
 
 - `,` read a single character from STDIN and push its byte value. Pushes `-1` once EOF is reached.
-- `?` read as many characters as possible to form a valid (signed) decimal integer and push its value. Pushes `0` once EOF is reached.
+- `?` read and discard from STDIN until a digit, a `-` or a `+` is found. Then read as many characters as possible to form a valid (signed) decimal integer and push its value. Pushes `0` once EOF is reached.
 - `.` pop a value and write the corresponding character to STDOUT.
 - `!` pop a value and write its decimal representation to STDOUT.
 - `\` print a newline/line feed character (0x0A).

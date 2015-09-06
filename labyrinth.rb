@@ -231,14 +231,19 @@ class Labyrinth
         when :input_int
             val = 0
             sign = 1
-            byte = read_byte
-            case byte
-            when '+'
-                sign = 1
-            when '-'
-                sign = -1
-            else
-                @next_byte = byte
+            loop do
+                byte = read_byte
+                case byte
+                when '+'
+                    sign = 1
+                when '-'
+                    sign = -1
+                when '0'..'9', nil
+                    @next_byte = byte
+                else
+                    next
+                end
+                break
             end
 
             loop do
