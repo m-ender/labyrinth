@@ -227,7 +227,7 @@ class Labyrinth
             byte = read_byte
             push_main(byte ? byte.ord : -1)
         when :output_char
-            $> << pop_main.chr
+            $> << (pop_main % 256).chr
         when :input_int
             val = 0
             sign = 1
