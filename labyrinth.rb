@@ -56,12 +56,15 @@ class Labyrinth
 
     OPERATORS.default = [:wall]
 
-    def self.run(src, debug_level=0)
-        new(src, debug_level).run
+    def self.run(src, debug_level=0, in_str=$stdin, out_str=$stdout, max_ticks=-1)
+        new(src, debug_level, in_str, out_str, max_ticks).run
     end
 
-    def initialize(src, debug_level=false)
+    def initialize(src, debug_level=false, in_str=$stdin, out_str=$stdout, max_ticks=-1)
         @debug_level = debug_level
+        @in_str = in_str
+        @out_str = out_str
+        @max_ticks = max_ticks
 
         @grid = parse(src)
         @height = @grid.size
@@ -95,7 +98,10 @@ class Labyrinth
             @ip += @dir.vec
 
             @tick += 1
+            break if @max_ticks > -1 && @tick >= @max_ticks
         end
+
+        @max_ticks > -1 && @tick >= @max_ticks
     end
 
     private
@@ -227,7 +233,7 @@ class Labyrinth
             byte = read_byte
             push_main(byte ? byte.ord : -1)
         when :output_char
-            $> << (pop_main % 256).chr
+            @out_str.print (pop_main % 256).chr
         when :input_int
             val = 0
             sign = 1
@@ -258,7 +264,7 @@ class Labyrinth
 
             push_main(sign*val)
         when :output_int
-            $> << pop_main
+            @out_str.print pop_main
         when :output_newline
             puts
 
@@ -403,23 +409,8 @@ class Labyrinth
             result = @next_byte
             @next_byte = nil
         else
-            result = STDIN.read(1)
+            result = @in_str.read(1)
         end
         result
     end
 end
-
-case ARGV[0]
-when "-d"
-    debug_level = 1
-when "-D"
-    debug_level = 2
-else
-    debug_level = 0
-end
-
-if debug_level > 0
-    ARGV.shift
-end
-
-Labyrinth.run(ARGF.read, debug_level)
