@@ -69,9 +69,9 @@ All arithmetic operators work with the *main* stack.
 
 These also operate on the *main* stack.
 
-- `,` read a single character from STDIN and push its byte value. Pushes `-1` once EOF is reached.
+- `,` read a single byte from STDIN and push its value. Pushes `-1` once EOF is reached.
 - `?` read and discard from STDIN until a digit, a `-` or a `+` is found. Then read as many characters as possible to form a valid (signed) decimal integer and push its value. Pushes `0` once EOF is reached.
-- `.` pop a value and write the corresponding character to STDOUT.
+- `.` pop a value, take it modulo 256 and write the resulting byte to STDOUT.
 - `!` pop a value and write its decimal representation to STDOUT.
 - `\` print a newline/line feed character (0x0A).
 
