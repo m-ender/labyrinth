@@ -84,22 +84,24 @@ class Labyrinth
             return
         end
         loop do
-            puts "\nTick #{@tick}:" if @debug_level > 1
-            p @ip if @debug_level > 1
+            $stderr.puts "\nTick #{@tick}:" if @debug_level > 1
+            $stderr.puts @ip.inspect if @debug_level > 1
             cmd = cell @ip
-            p cmd if @debug_level > 1
+            $stderr.puts cmd.inspect if @debug_level > 1
             if cmd[0] == :terminate
                 break
             end
             process cmd
-            puts @main*' ' + ' | ' + @aux.reverse*' ' if @debug_level > 1
+            $stderr.puts @main*' ' + ' | ' + @aux.reverse*' ' if @debug_level > 1
             @dir = get_new_dir
-            p @dir if @debug_level > 1
+            $stderr.puts @dir.inspect if @debug_level > 1
             @ip += @dir.vec
 
             @tick += 1
             break if @max_ticks > -1 && @tick >= @max_ticks
         end
+
+        $stderr.puts "\nTicks: #{@tick}" if @debug_level > 0
 
         @max_ticks > -1 && @tick >= @max_ticks
     end
@@ -280,7 +282,7 @@ class Labyrinth
                 end
             end
 
-            puts @grid.map{|l| l.map{|c| OPERATORS.invert[c]}*''} if @debug_level > 1
+            $stderr.puts @grid.map{|l| l.map{|c| OPERATORS.invert[c]}*''} if @debug_level > 1
         when :rotate_east
             offset = pop_main
             @grid[(y+offset) % @height].rotate!(-1)
@@ -292,7 +294,7 @@ class Labyrinth
                 end
             end
 
-            puts @grid.map{|l| l.map{|c| OPERATORS.invert[c]}*''} if @debug_level > 1
+            $stderr.puts @grid.map{|l| l.map{|c| OPERATORS.invert[c]}*''} if @debug_level > 1
         when :rotate_north
             offset = pop_main
             grid = @grid.transpose
@@ -306,7 +308,7 @@ class Labyrinth
                 end
             end
 
-            puts @grid.map{|l| l.map{|c| OPERATORS.invert[c]}*''} if @debug_level > 1
+            $stderr.puts @grid.map{|l| l.map{|c| OPERATORS.invert[c]}*''} if @debug_level > 1
         when :rotate_south
             offset = pop_main
             grid = @grid.transpose
@@ -320,7 +322,7 @@ class Labyrinth
                 end
             end
 
-            puts @grid.map{|l| l.map{|c| OPERATORS.invert[c]}*''} if @debug_level > 1
+            $stderr.puts @grid.map{|l| l.map{|c| OPERATORS.invert[c]}*''} if @debug_level > 1
 
         # Others
         when :terminate
@@ -329,12 +331,12 @@ class Labyrinth
             # Nop(e)
         when :debug
             if @debug_level > 0
-                puts
-                puts "Grid:"
-                puts @grid.map{|l| l.map{|c| OPERATORS.invert[c]}*''}
-                puts "Position: #{@ip.pretty}"
-                puts "Direction: #{@dir.class.name}"
-                puts "Main [ #{@main*' '}  |  #{@aux.reverse*' '} ] Auxiliary"
+                $stderr.puts
+                $stderr.puts "Grid:"
+                $stderr.puts @grid.map{|l| l.map{|c| OPERATORS.invert[c]}*''}
+                $stderr.puts "Position: #{@ip.pretty}"
+                $stderr.puts "Direction: #{@dir.class.name}"
+                $stderr.puts "Main [ #{@main*' '}  |  #{@aux.reverse*' '} ] Auxiliary"
             end
         end
     end
@@ -348,7 +350,7 @@ class Labyrinth
             neighbors << dir if cell(@ip + dir.vec)[0] != :wall
         end
 
-        p neighbors if @debug_level > 1
+        $stderr.puts neighbors.inspect if @debug_level > 1
 
         case neighbors.size
         when 0
