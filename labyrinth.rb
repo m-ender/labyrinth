@@ -273,7 +273,7 @@ class Labyrinth
             offset = pop_main
             @grid[(y+offset) % @height].rotate!(1)
             
-            if offset == 0
+            if offset % @height == 0
                 @ip += West.new.vec
                 if x < 0
                     @ip.x = @width-1
@@ -285,7 +285,7 @@ class Labyrinth
             offset = pop_main
             @grid[(y+offset) % @height].rotate!(-1)
             
-            if offset == 0
+            if offset % @height == 0
                 @ip += East.new.vec
                 if x >= @width
                     @ip.x = 0
@@ -299,7 +299,7 @@ class Labyrinth
             grid[(x+offset) % @width].rotate!(1)
             @grid = grid.transpose
             
-            if offset == 0
+            if offset % @width == 0
                 @ip += North.new.vec
                 if y < 0
                     @ip.y = @height-1
@@ -313,7 +313,7 @@ class Labyrinth
             grid[(x+offset) % @width].rotate!(-1)
             @grid = grid.transpose
             
-            if offset == 0
+            if offset % @width == 0
                 @ip += South.new.vec
                 if y >= @height
                     @ip.y = 0
