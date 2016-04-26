@@ -266,7 +266,7 @@ class Labyrinth
         when :output_int
             @out_str.print pop_main
         when :output_newline
-            puts
+            @out_str.puts
 
         # Grid manipulation
         when :rotate_west
@@ -409,7 +409,8 @@ class Labyrinth
             result = @next_byte
             @next_byte = nil
         else
-            result = @in_str.read(1)
+            result = @in_str.read(1) 
+            # result = @in_str.read(1) while result =~ /\r|\n/
         end
         result
     end
