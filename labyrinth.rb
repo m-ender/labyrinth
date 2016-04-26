@@ -76,7 +76,7 @@ class Labyrinth
         @main = []
         @aux = []
 
-        @tick = 0
+        @tick = 1
     end
 
     def run
@@ -98,7 +98,7 @@ class Labyrinth
             @ip += @dir.vec
 
             @tick += 1
-            break if @max_ticks > -1 && @tick >= @max_ticks
+            break if @max_ticks > -1 && @tick > @max_ticks
         end
 
         $stderr.puts "\nTicks: #{@tick}" if @debug_level > 0
